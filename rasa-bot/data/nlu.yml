@@ -102,3 +102,12 @@ nlu:
       - can you tell about covid cases in [600036](pincode)
       - corona cases in [600036](pincode)
       - information about covid cases in [560044](pincode)
+
+  - intent: ask_covid_stats_without_pincode
+    examples: |
+      - what are the covid cases today?
+      - covid cases today
+      - latest stats of covid
+      - how many covid cases today
+      - todays covid updates
+      - latest covid cases summary

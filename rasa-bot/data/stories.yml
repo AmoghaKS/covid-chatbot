@@ -32,3 +32,17 @@ stories:
     steps:
       - intent: asking_covid_stats_through_pincode
       - action: action_get_covid_stats
+
+  - story: User asks for covid stats without providing pincode/district_name - user affirm
+    steps:
+      - intent: ask_covid_stats_without_pincode
+      - action: action_check_stored_pincode_ask_user_back
+      - intent: affirm
+      - action: action_fetch_stats_for_stored_pincode
+
+  - story: User asks for covid stats without providing pincode/district_name - user deny
+    steps:
+      - intent: ask_covid_stats_without_pincode
+      - action: action_check_stored_pincode_ask_user_back
+      - intent: deny
+      - action: action_fetch_covid_stats_for_india

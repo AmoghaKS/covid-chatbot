@@ -9,6 +9,7 @@ intents:
   - mood_unhappy
   - bot_challenge
   - asking_covid_stats_through_pincode
+  - ask_covid_stats_without_pincode
 
 entities:
   - person_name
@@ -40,7 +41,9 @@ responses:
 
 actions:
   - action_get_covid_stats
-
+  - action_check_stored_pincode_ask_user_back
+  - action_fetch_stats_for_stored_pincode
+  - action_fetch_covid_stats_for_india
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
