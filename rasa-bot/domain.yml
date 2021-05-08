@@ -11,6 +11,7 @@ intents:
   - asking_covid_stats_through_pincode
   - ask_covid_stats_without_pincode
   - user_provides_username
+  - user_provides_state_name
 
 entities:
   - username
