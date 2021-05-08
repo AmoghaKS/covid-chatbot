@@ -87,15 +87,15 @@ class API:
 
         data = response.json()
 
-        covid_stats = data['cases_time_series'][-1]
+        covid_stats = data['statewise'][0]
 
-        cases_in_the_last_24_hours = covid_stats['dailyconfirmed']
-        deaths_in_the_last_24_hours = covid_stats['dailydeceased']
-        recoveries_in_the_last_24_hours = covid_stats['dailyrecovered']
+        cases_in_the_last_24_hours = covid_stats['deltaconfirmed']
+        deaths_in_the_last_24_hours = covid_stats['deltadeaths']
+        recoveries_in_the_last_24_hours = covid_stats['deltarecovered']
 
-        total_cases_reported = covid_stats['totalconfirmed']
-        total_deaths = covid_stats['totaldeceased']
-        total_recovered = covid_stats['totalrecovered']
+        total_cases_reported = covid_stats['confirmed']
+        total_deaths = covid_stats['deaths']
+        total_active = covid_stats['active']
 
         covid_stats_pretty_print = f"""🤍
         COVID-19 stats of India:
@@ -106,7 +106,7 @@ class API:
         -----------------------------------------
         Total cases reported: {total_cases_reported}
         Total deaths: {total_deaths}
-        Total recoveries: {total_recovered}
+        Total active cases: {total_active}
         -----------------------------------------
         """
         return covid_stats_pretty_print
