@@ -111,3 +111,13 @@ nlu:
       - how many covid cases today
       - todays covid updates
       - latest covid cases summary
+
+  - intent: user_provides_username
+    examples: |
+      - [Adithya](username)
+      - My name is [Amogha](username)
+      - My nme is [Kirushant](username)
+      - I'm [Praveen](username)
+      - [David](username)
+      - [disha](username)
+      - [anu](username)

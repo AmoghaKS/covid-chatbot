@@ -4,14 +4,14 @@ stories:
   - story: happy path
     steps:
       - intent: greet
-      - action: utter_greet
+      - action: action_ask_username
       - intent: mood_great
       - action: utter_happy
 
   - story: sad path 1
     steps:
       - intent: greet
-      - action: utter_greet
+      - action: action_ask_username
       - intent: mood_unhappy
       - action: utter_cheer_up
       - action: utter_did_that_help
@@ -21,7 +21,7 @@ stories:
   - story: sad path 2
     steps:
       - intent: greet
-      - action: utter_greet
+      - action: action_ask_username
       - intent: mood_unhappy
       - action: utter_cheer_up
       - action: utter_did_that_help
@@ -46,3 +46,10 @@ stories:
       - action: action_check_stored_pincode_ask_user_back
       - intent: deny
       - action: action_fetch_covid_stats_for_india
+
+  - story: User provides username
+    steps:
+      - intent: greet
+      - action: action_ask_username
+      - intent: user_provides_username
+      - action: utter_greet_user

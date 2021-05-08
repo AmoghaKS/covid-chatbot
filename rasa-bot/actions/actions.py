@@ -65,7 +65,7 @@ class API:
         total_deaths = covid_stats['deceased']
         total_active_cases = covid_stats['active']
 
-        covid_stats_pretty_print = f""".
+        covid_stats_pretty_print = f"""🤍
         COVID-19 stats of '{district}, {state}':
         ----------------------------------------
         Cases in the last 24 hours: {cases_in_the_last_24_hours}
@@ -97,7 +97,7 @@ class API:
         total_deaths = covid_stats['totaldeceased']
         total_recovered = covid_stats['totalrecovered']
 
-        covid_stats_pretty_print = f""".
+        covid_stats_pretty_print = f"""🤍
         COVID-19 stats of India:
         ----------------------------------------
         Cases in the last 24 hours: {cases_in_the_last_24_hours}
@@ -193,5 +193,25 @@ class ActionFetchCovidStatsForIndia(Action):
         covid_stats_of_india = API.getCovidStatsOfIndia()
 
         dispatcher.utter_message(text=covid_stats_of_india)
+
+        return []
+
+
+class ActionAskUsername(Action):
+
+    def name(self) -> Text:
+        return "action_ask_username"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        username_slot_value = tracker.get_slot("username")
+
+        if username_slot_value == None:
+            dispatcher.utter_message(text="What is your name?")
+        else:
+            greet_user = f"""Hello {username_slot_value}, How can I help you?"""
+            dispatcher.utter_message(text=greet_user)
 
         return []

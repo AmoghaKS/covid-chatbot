@@ -10,15 +10,17 @@ intents:
   - bot_challenge
   - asking_covid_stats_through_pincode
   - ask_covid_stats_without_pincode
+  - user_provides_username
 
 entities:
-  - person_name
+  - username
   - pincode
 
 slots:
   pincode:
     type: any
-
+  username:
+    type: text
 responses:
   utter_greet:
     - text: "Hey! How are you?"
@@ -39,11 +41,14 @@ responses:
   utter_iamabot:
     - text: "I am a bot, powered by Rasa."
 
+  utter_greet_user:
+    - text: "Hi {username}, how can I help you?"
 actions:
   - action_get_covid_stats
   - action_check_stored_pincode_ask_user_back
   - action_fetch_stats_for_stored_pincode
   - action_fetch_covid_stats_for_india
+  - action_ask_username
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
