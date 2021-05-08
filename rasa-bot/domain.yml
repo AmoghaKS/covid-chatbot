@@ -15,11 +15,13 @@ intents:
 entities:
   - username
   - pincode
-
+  - statename
 slots:
   pincode:
     type: any
   username:
+    type: text
+  statename:
     type: text
 responses:
   utter_greet:
@@ -49,6 +51,7 @@ actions:
   - action_fetch_stats_for_stored_pincode
   - action_fetch_covid_stats_for_india
   - action_ask_username
+  - action_fetch_covid_stats_for_state
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

@@ -53,3 +53,8 @@ stories:
       - action: action_ask_username
       - intent: user_provides_username
       - action: utter_greet_user
+
+  - story: User provides statename
+    steps:
+      - intent: user_provides_state_name
+      - action: action_fetch_covid_stats_for_state

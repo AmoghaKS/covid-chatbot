@@ -8,6 +8,8 @@ rasa = "*"
 python-socketio = "==4.6.1"
 python-engineio = "==3.13.2"
 sanic = "==19.9.0"
+fuzzywuzzy = "*"
+python-levenshtein = "*"
 
 [dev-packages]
 
