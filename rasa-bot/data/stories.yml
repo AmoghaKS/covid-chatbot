@@ -58,3 +58,8 @@ stories:
     steps:
       - intent: user_provides_state_name
       - action: action_fetch_covid_stats_for_state
+
+  - story: User provides pincode in words
+    steps:
+      - intent: user_provides_pincode_in_words
+      - action: action_fetch_results_for_pincode_in_words

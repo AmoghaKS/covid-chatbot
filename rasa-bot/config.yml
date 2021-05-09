@@ -3,6 +3,17 @@
 language: en
 
 pipeline:
+  - name: "DucklingHTTPExtractor"
+    # url of the running duckling server
+    url: "http://localhost:8000"
+    # dimensions to extract
+    dimensions: ["number"]
+    # if not set the default timezone of Duckling is going to be used
+    # needed to calculate dates from relative expressions like "tomorrow"
+    timezone: "Asia/Kolkata"
+    # Timeout for receiving response from http url of the running duckling server
+    # if not set the default timeout of duckling http url is set to 3 seconds.
+    timeout: 3
   # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
   # # If you'd like to customize it, uncomment and adjust the pipeline.
   # # See https://rasa.com/docs/rasa/tuning-your-model for more information.

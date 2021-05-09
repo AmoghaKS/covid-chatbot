@@ -301,3 +301,35 @@ class ActionAskUsername(Action):
             dispatcher.utter_message(text=greet_user)
 
         return []
+
+
+class ActionFetchResultsForPincodeInWords(Action):
+
+    def name(self) -> Text:
+        return "action_fetch_results_for_pincode_in_words"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        entity_value = tracker.latest_message['entities'][0]['value']
+        entity_text = tracker.latest_message['entities'][0]['text']
+
+        pincode = 0
+        if len(tracker.latest_message['entities']) == 6:
+            for entity_info in tracker.latest_message['entities']:
+                pincode = pincode*10 + entity_info['value']
+        else:
+            dispatcher.utter_message(
+                text="Please enter 6 digit valid pincode either in numbers only or each digit spelled in words separated by space")
+            return []
+
+        details_from_pincode = API.getPostOfficeDetails(pincode)
+        state_name = details_from_pincode[0]
+        district_name = details_from_pincode[1]
+
+        covid_stats_pretty_print = API.getCovidStats(state_name, district_name)
+
+        dispatcher.utter_message(text=covid_stats_pretty_print)
+
+        return []

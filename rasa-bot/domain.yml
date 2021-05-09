@@ -1,25 +1,44 @@
 version: "2.0"
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-  - asking_covid_stats_through_pincode
-  - ask_covid_stats_without_pincode
-  - user_provides_username
-  - user_provides_state_name
+  - greet:
+      use_entities: true
+  - goodbye:
+      use_entities: true
+  - affirm:
+      use_entities: true
+  - deny:
+      use_entities: true
+  - mood_great:
+      use_entities: true
+  - mood_unhappy:
+      use_entities: true
+  - bot_challenge:
+      use_entities: true
+  - asking_covid_stats_through_pincode:
+      use_entities:
+        - pincode
+      ignore_entities:
+        - number
+  - ask_covid_stats_without_pincode:
+      use_entities: true
+  - user_provides_username:
+      use_entities: true
+  - user_provides_state_name:
+      use_entities: true
+  - user_provides_pincode_in_words:
+      use_entities: true
 
 entities:
   - username
   - pincode
   - statename
+  - number
 slots:
   pincode:
     type: any
+  number:
+    type: float
   username:
     type: text
   statename:
@@ -53,6 +72,8 @@ actions:
   - action_fetch_covid_stats_for_india
   - action_ask_username
   - action_fetch_covid_stats_for_state
+  - action_fetch_results_for_pincode_in_words
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

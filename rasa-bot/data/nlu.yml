@@ -168,3 +168,17 @@ nlu:
       - covid19 information in [Chandigarh](statename)
       - covid stats in [Chhattisgarh](statename)
       - covid stats in [Delhi](statename)
+
+  - intent: user_provides_pincode_in_words
+    examples: |
+      - six zero zero zero three six
+      - one two three four five six
+      - seven eight nine ten
+      - five lakh fourty two
+      - five seven seven one three one
+      - six zero zero thirty six
+      - six lakh thirty six
+      - five six six zero four six
+      - covid updates in six zero zero zero three six
+      - covid status in six zero one zero three six
+      - give me info of covid in six lakh thirty six
