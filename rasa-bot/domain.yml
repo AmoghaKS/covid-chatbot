@@ -24,7 +24,7 @@ intents:
       use_entities: true
   - user_provides_username:
       use_entities: true
-  - user_provides_state_name:
+  - user_provides_city_name:
       use_entities: true
   - user_provides_pincode_in_words:
       use_entities: true
@@ -32,7 +32,7 @@ intents:
 entities:
   - username
   - pincode
-  - statename
+  - cityname
   - number
 slots:
   pincode:
@@ -41,7 +41,7 @@ slots:
     type: float
   username:
     type: text
-  statename:
+  cityname:
     type: text
 responses:
   utter_greet:
@@ -71,7 +71,7 @@ actions:
   - action_fetch_stats_for_stored_pincode
   - action_fetch_covid_stats_for_india
   - action_ask_username
-  - action_fetch_covid_stats_for_state
+  - action_fetch_covid_stats_for_city
   - action_fetch_results_for_pincode_in_words
 
 session_config:

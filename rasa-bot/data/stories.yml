@@ -54,10 +54,10 @@ stories:
       - intent: user_provides_username
       - action: utter_greet_user
 
-  - story: User provides statename
+  - story: User provides cityname
     steps:
-      - intent: user_provides_state_name
-      - action: action_fetch_covid_stats_for_state
+      - intent: user_provides_city_name
+      - action: action_fetch_covid_stats_for_city
 
   - story: User provides pincode in words
     steps:

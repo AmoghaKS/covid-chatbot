@@ -50,6 +50,57 @@ def getIndiaStatesList():
     return states
 
 
+def getIndiaDistrictList():
+    url = "https://api.covid19india.org/state_district_wise.json"
+
+    data = ((requests.get(url)).json())
+    states = []
+    districts = []
+    district_state_dictionary = {}
+
+    for key in data.items():
+        states.append(key[0])
+
+    for state in states:
+        for key in (data[state]['districtData']).items():
+            district = key[0]
+            district_state_dictionary[district] = state
+            districts.append(district)
+    return districts, district_state_dictionary
+
+
+def getCovidStats(state, district):
+    url = "https://api.covid19india.org/state_district_wise.json"
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    data = response.json()
+    covid_stats = data[state]['districtData'][district]
+
+    cases_in_the_last_24_hours = covid_stats['delta']['confirmed']
+    deaths_in_the_last_24_hours = covid_stats['delta']['deceased']
+    recoveries_in_the_last_24_hours = covid_stats['delta']['recovered']
+
+    total_cases_reported = covid_stats['confirmed']
+    total_deaths = covid_stats['deceased']
+    total_active_cases = covid_stats['active']
+
+    covid_stats_pretty_print = f"""🤍
+    COVID-19 stats of '{district}, {state}':
+    ----------------------------------------
+    Cases in the last 24 hours: {cases_in_the_last_24_hours}
+    Deaths in the last 24 hours: {deaths_in_the_last_24_hours}
+    Recoveries in the last 24 hours: {recoveries_in_the_last_24_hours}
+    -----------------------------------------
+    Total cases reported: {total_cases_reported}
+    Total deaths: {total_deaths}
+    Total active cases: {total_active_cases}
+    -----------------------------------------
+    """
+    return covid_stats_pretty_print
+
+
 class API:
 
     def getPostOfficeDetails(pincode):
@@ -68,37 +119,6 @@ class API:
         result = [state_name, district_name]
 
         return result
-
-    def getCovidStats(state, district):
-        url = "https://api.covid19india.org/state_district_wise.json"
-        payload = {}
-        headers = {}
-        response = requests.request("GET", url, headers=headers, data=payload)
-
-        data = response.json()
-        covid_stats = data[state]['districtData'][district]
-
-        cases_in_the_last_24_hours = covid_stats['delta']['confirmed']
-        deaths_in_the_last_24_hours = covid_stats['delta']['deceased']
-        recoveries_in_the_last_24_hours = covid_stats['delta']['recovered']
-
-        total_cases_reported = covid_stats['confirmed']
-        total_deaths = covid_stats['deceased']
-        total_active_cases = covid_stats['active']
-
-        covid_stats_pretty_print = f"""🤍
-        COVID-19 stats of '{district}, {state}':
-        ----------------------------------------
-        Cases in the last 24 hours: {cases_in_the_last_24_hours}
-        Deaths in the last 24 hours: {deaths_in_the_last_24_hours}
-        Recoveries in the last 24 hours: {recoveries_in_the_last_24_hours}
-        -----------------------------------------
-        Total cases reported: {total_cases_reported}
-        Total deaths: {total_deaths}
-        Total active cases: {total_active_cases}
-        -----------------------------------------
-        """
-        return covid_stats_pretty_print
 
     def getCovidStatsOfIndia():
         url = "https://api.covid19india.org/data.json"
@@ -132,7 +152,7 @@ class API:
         """
         return covid_stats_pretty_print
 
-    def getCovidStatsOfState(state):
+    def getCovidStatsOfCity(city):
 
         url = "https://api.covid19india.org/data.json"
         payload = {}
@@ -144,39 +164,46 @@ class API:
         all_states_data = data['statewise']
 
         states = getIndiaStatesList()
+        districts, district_state_pair = getIndiaDistrictList()
+
+        cities = states + districts
         # this will contain most matched states list; can be used if decided to show suggestion to user
-        matched_states = get_most_matched_string(state, states)
-        print(matched_states)
+        matched_city = get_most_matched_string(city, cities)
+        print(matched_city)
 
-        current_state = matched_states[0][0]
-        index = 0
-        for state_specific_data in all_states_data:
-            if state_specific_data['state'] == current_state:
-                break
-            index += 1
+        if matched_city[0][0] in states:
+            current_state = matched_city[0][0]
+            index = 0
+            for state_specific_data in all_states_data:
+                if state_specific_data['state'] == current_state:
+                    break
+                index += 1
 
-        covid_stats = data['statewise'][index]
-        cases_in_the_last_24_hours = covid_stats['deltaconfirmed']
-        deaths_in_the_last_24_hours = covid_stats['deltadeaths']
-        recoveries_in_the_last_24_hours = covid_stats['deltarecovered']
+            covid_stats = data['statewise'][index]
+            cases_in_the_last_24_hours = covid_stats['deltaconfirmed']
+            deaths_in_the_last_24_hours = covid_stats['deltadeaths']
+            recoveries_in_the_last_24_hours = covid_stats['deltarecovered']
 
-        total_cases_reported = covid_stats['confirmed']
-        total_deaths = covid_stats['deaths']
-        total_active = covid_stats['active']
+            total_cases_reported = covid_stats['confirmed']
+            total_deaths = covid_stats['deaths']
+            total_active = covid_stats['active']
 
-        covid_stats_pretty_print = f"""🤍
-        COVID-19 stats of {current_state}:
-        ----------------------------------------
-        Cases in the last 24 hours: {cases_in_the_last_24_hours}
-        Deaths in the last 24 hours: {deaths_in_the_last_24_hours}
-        Recoveries in the last 24 hours: {recoveries_in_the_last_24_hours}
-        -----------------------------------------
-        Total cases reported: {total_cases_reported}
-        Total deaths: {total_deaths}
-        Total active cases: {total_active}
-        -----------------------------------------
-        """
-        return covid_stats_pretty_print
+            covid_stats_pretty_print = f"""🤍
+            COVID-19 stats of {current_state}:
+            ----------------------------------------
+            Cases in the last 24 hours: {cases_in_the_last_24_hours}
+            Deaths in the last 24 hours: {deaths_in_the_last_24_hours}
+            Recoveries in the last 24 hours: {recoveries_in_the_last_24_hours}
+            -----------------------------------------
+            Total cases reported: {total_cases_reported}
+            Total deaths: {total_deaths}
+            Total active cases: {total_active}
+            -----------------------------------------
+            """
+            return covid_stats_pretty_print
+        else:
+            state = district_state_pair[matched_city[0][0]]
+            return getCovidStats(state, matched_city[0][0])
 
 
 class ActionGetCovidStats(Action):
@@ -194,7 +221,25 @@ class ActionGetCovidStats(Action):
         state_name = details_from_pincode[0]
         district_name = details_from_pincode[1]
 
-        covid_stats_pretty_print = API.getCovidStats(state_name, district_name)
+        url = "https://api.covid19india.org/data.json"
+        payload = {}
+        headers = {}
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        data = response.json()
+
+        all_states_data = data['statewise']
+
+        states = getIndiaStatesList()
+        districts, district_state_pair = getIndiaDistrictList()
+
+        cities = states + districts
+
+        matched_districtname = get_most_matched_string(district_name, cities)
+        matched_statename = get_most_matched_string(state_name, cities)
+
+        covid_stats_pretty_print = getCovidStats(
+            matched_statename[0][0], matched_districtname[0][0])
 
         dispatcher.utter_message(text=covid_stats_pretty_print)
         return []
@@ -241,26 +286,44 @@ class ActionFetchStatsForStoredPincode(Action):
         state_name = details_from_pincode[0]
         district_name = details_from_pincode[1]
 
-        covid_stats_pretty_print = API.getCovidStats(state_name, district_name)
+        url = "https://api.covid19india.org/data.json"
+        payload = {}
+        headers = {}
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        data = response.json()
+
+        all_states_data = data['statewise']
+
+        states = getIndiaStatesList()
+        districts, district_state_pair = getIndiaDistrictList()
+
+        cities = states + districts
+
+        matched_districtname = get_most_matched_string(district_name, cities)
+        matched_statename = get_most_matched_string(state_name, cities)
+
+        covid_stats_pretty_print = getCovidStats(
+            matched_statename[0][0], matched_districtname[0][0])
 
         dispatcher.utter_message(text=covid_stats_pretty_print)
 
         return []
 
 
-class ActionFetchCovidStatsForState(Action):
+class ActionFetchCovidStatsForCity(Action):
 
     def name(self) -> Text:
-        return "action_fetch_covid_stats_for_state"
+        return "action_fetch_covid_stats_for_city"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        statename_slot_value = tracker.get_slot("statename")
-
-        covid_stats_pretty_print = API.getCovidStatsOfState(
-            statename_slot_value)
+        cityname_slot_value = tracker.get_slot("cityname")
+        print(cityname_slot_value)
+        covid_stats_pretty_print = API.getCovidStatsOfCity(
+            cityname_slot_value)
 
         dispatcher.utter_message(text=covid_stats_pretty_print)
 
@@ -328,7 +391,7 @@ class ActionFetchResultsForPincodeInWords(Action):
         state_name = details_from_pincode[0]
         district_name = details_from_pincode[1]
 
-        covid_stats_pretty_print = API.getCovidStats(state_name, district_name)
+        covid_stats_pretty_print = getCovidStats(state_name, district_name)
 
         dispatcher.utter_message(text=covid_stats_pretty_print)
 
