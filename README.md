@@ -43,6 +43,11 @@ It can fetch result based on the pincode provided
 
 ----
 
+If no information is passed, bot tries to check if the user intended to check the cases previously viewed
+![image](https://user-images.githubusercontent.com/43683444/117584359-1987b900-b12a-11eb-8623-48258adf2644.png)
+
+----
+
 Fetch result by providing city name
 
 ![image](https://user-images.githubusercontent.com/43683444/117583841-1939ee80-b127-11eb-89ce-4d67976ed8da.png)
