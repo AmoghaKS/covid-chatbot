@@ -28,3 +28,38 @@ The COVID-19 Bot can:
     rasa run actions -vv //before running this make sure you've also added required config in endpoints.yml
     rasa run -m models --enable-api --cors "*" --debug
     rasa data validate // to check if there are conflicts
+
+## Screenshots
+
+Username given here will be stored
+
+![image](https://user-images.githubusercontent.com/43683444/117583828-06bfb500-b127-11eb-93f5-8d87339a8a2d.png)
+
+----
+
+It can fetch result based on the pincode provided
+
+![image](https://user-images.githubusercontent.com/43683444/117584117-8a2dd600-b128-11eb-8623-6e55c19c9e75.png)
+
+----
+
+If no information is passed, bot tries to check if the user intended to check the cases previously viewed
+![image](https://user-images.githubusercontent.com/43683444/117584359-1987b900-b12a-11eb-8623-48258adf2644.png)
+
+----
+
+Fetch result by providing city name
+
+![image](https://user-images.githubusercontent.com/43683444/117583841-1939ee80-b127-11eb-89ce-4d67976ed8da.png)
+
+----
+
+It can use the username previously stored, and fetch the result even if the pincode is spelled in words
+
+![image](https://user-images.githubusercontent.com/43683444/117583917-88174780-b127-11eb-9cd9-6d5fcb19e79a.png)
+
+----
+
+Bot can handle the city names spelled incorrectly and fetches most appropriate result
+
+![image](https://user-images.githubusercontent.com/43683444/117583990-f5c37380-b127-11eb-899f-e15eccdafee6.png)
