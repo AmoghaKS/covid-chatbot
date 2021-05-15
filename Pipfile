@@ -10,6 +10,7 @@ python-engineio = "==3.13.2"
 sanic = "==19.9.0"
 fuzzywuzzy = "*"
 python-levenshtein = "*"
+translate = "*"
 
 [dev-packages]
 
